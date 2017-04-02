@@ -63,6 +63,31 @@ Require Bootstrap Javascripts in `app/assets/javascripts/application.js`:
 `bootstrap-sprockets` provides individual Bootstrap Javascript files (`alert.js` or `dropdown.js`, for example), while
 `bootstrap` provides a concatenated file containing all Bootstrap Javascripts.
 
+#### Overriding `_variables.scss`
+
+To override included in gem `_variables.scss`, create file `RAILS_ROOT/config/initializers/bootstrap.rb` with next code:
+
+```ruby
+Bootstrap.configure do |config|
+  # we will load +_variables.scss+ manually
+  config.load_variables = false
+end
+```
+
+copy `_variables.scss` from this gem to `RAILS_ROOT/app/assets/stylesheets/optional/custom/path/_custom_bootstrap_variables.scss`
+
+then import it in `app/assets/stylesheets/application.scss` before bootstrap:
+
+```scss
+// "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
+// Your "custom_bootstrap_variables" must be imported before "bootstrap"
+@import "bootstrap-sprockets";
+@import "optional/custom/path/custom_bootstrap_variables"
+@import "bootstrap";
+```
+
+Now you can modify `_custom_bootstrap_variables.scss` and bootstrap will load it.
+
 #### Bower with Rails
 
 When using [bootstrap-sass Bower package](#c-bower) instead of the gem in Rails, configure assets in `config/application.rb`:

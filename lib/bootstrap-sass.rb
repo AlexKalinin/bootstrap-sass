@@ -1,4 +1,6 @@
 require 'bootstrap-sass/version'
+require 'bootstrap-sass/configuration'
+
 module Bootstrap
   class << self
     # Inspired by Kaminari
@@ -52,6 +54,24 @@ module Bootstrap
 
     def lotus?
       defined?(::Lotus)
+    end
+
+    # Returns Bootstrap gem configuration.
+    #
+    def config
+      @@config ||= Configuration.new
+    end
+
+    # Configures Bootstrap gem.
+    #
+    # @yield [Configuration] configuration object.
+    # @example
+    #
+    #   Bootstrap.configure do |config|
+    #     # config.load_variables = false
+    #   end
+    def configure
+      yield config
     end
 
     private
